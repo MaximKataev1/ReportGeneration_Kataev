@@ -9,32 +9,25 @@ using ReportGeneration_Kataev.Models;
 
 namespace ReportGeneration_Kataev.Classes
 {
-    public class StudentContext : Student
+    public class GroupContext : Group
     {
-        public StudentContext(int Id, string Firstname, string Lastname, int IdGroup, bool Expelled, DateTime DateExpelled) :
-        base(Id, Firstname, Lastname, IdGroup, Expelled, DateExpelled)
-        { }
+        public GroupContext(int Id, string Name) : base(Id, Name) { }
 
-        public static List<StudentContext> AllStudent()
+        public static List<GroupContext> AllGroups()
         {
-            List<StudentContext> allStudent = new List<StudentContext>();
+            List<GroupContext> allGroups = new List<GroupContext>();
             MySqlConnection connection = Connection.OpenConnection();
-            MySqlDataReader DOSstudents = Connection.Query("SELECT * FROM 'student' ORDER BY 'lastName'", connection);
+            MySqlDataReader BDGroups = Connection.Query("SELECT * FROM `group` ORDER BY `Name`", connection);
 
-            while (DOSstudents.Read())
+            while (BDGroups.Read())
             {
-                allStudent.Add(new StudentContext(
-                    DOSstudents.GetInt32(0),
-                    DOSstudents.GetString(1),
-                    DOSstudents.GetString(2),
-                    DOSstudents.GetInt32(3),
-                    DOSstudents.GetBoolean(4),
-                    DOSstudents.IsDBNull(5) ? DateTime.Now : DOSstudents.GetDateTime(5)
-                ));
+                allGroups.Add(new GroupContext(
+                    BDGroups.GetInt32(0),
+                    BDGroups.GetString(1)));
             }
 
             Connection.CloseConnection(connection);
-            return allStudent;
+            return allGroups;
         }
     }
 }

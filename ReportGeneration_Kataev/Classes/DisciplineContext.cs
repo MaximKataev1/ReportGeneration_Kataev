@@ -9,23 +9,26 @@ using ReportGeneration_Kataev.Models;
 
 namespace ReportGeneration_Kataev.Classes
 {
-    public class DisciplineContext(int Id, string Name, int IdGroup) : base(Id, Name, IdGroup) { }
-
-    public static List<DisciplineContext> AllDisciplines()
+    public class DisciplineContext : Discipline
     {
-        List<DisciplineContext> allDisciplines = new List<DisciplineContext>();
-        MySqlConnection connection = Connection.OpenConnection();
-        MySqlDataReader BDDIsciplines = Connection.Query("SELECT * FROM 'discipline' ORDER BY 'Name',", connection);
+        public DisciplineContext(int Id, string Name, int IdGroup) : base(Id, Name, IdGroup) { }
 
-        while (BDDIsciplines.Read())
+        public static List<DisciplineContext> AllDisciplines()
         {
-            allDisciplines.Add(new DisciplineContext(
-                BDDIsciplines.GetInt32(0),
-                BDDIsciplines.GetString(1),
-                BDDIsciplines.GetInt32(2)));
-        }
+            List<DisciplineContext> allDisciplines = new List<DisciplineContext>();
+            MySqlConnection connection = Connection.OpenConnection();
+            MySqlDataReader BDDisciplines = Connection.Query("SELECT * FROM `discipline` ORDER BY `Name`", connection);
 
-        Connection.CloseConnection(connection);
-        return allDisciplines;
+            while (BDDisciplines.Read())
+            {
+                allDisciplines.Add(new DisciplineContext(
+                    BDDisciplines.GetInt32(0),
+                    BDDisciplines.GetString(1),
+                    BDDisciplines.GetInt32(2)));
+            }
+
+            Connection.CloseConnection(connection);
+            return allDisciplines;
+        }
     }
 }

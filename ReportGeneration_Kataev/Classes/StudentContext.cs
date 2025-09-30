@@ -11,7 +11,7 @@ namespace ReportGeneration_Kataev.Classes
 {
     public class StudentContext : Student
     {
-        public StudentContex(int id, string Firstname, string Lastname, int IdGroup, bool Expelled, DateTime DateExpelled) :
+        public StudentContext(int id, string Firstname, string Lastname, int IdGroup, bool Expelled, DateTime DateExpelled) :
             base(id, Firstname, Lastname, IdGroup, Expelled, DateExpelled) { }
         public static List<StudentContext> AllStudent()
         {
