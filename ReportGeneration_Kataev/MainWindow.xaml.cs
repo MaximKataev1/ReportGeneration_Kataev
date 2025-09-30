@@ -23,6 +23,11 @@ namespace ReportGeneration_Kataev
         public MainWindow()
         {
             InitializeComponent();
+            init = true;
+
+            OpenPages(new Pages.Main());
         }
+        public void OpenPages(Page page) =>
+            frame.Navigate(page);
     }
 }
